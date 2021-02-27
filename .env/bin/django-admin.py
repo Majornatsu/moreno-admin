@@ -1,4 +1,4 @@
-#!/home/major/alfeu/moreno-admin/.env/bin/python3
+#!/home/thesamehunter/pessoal/alfeu/moreno_admin/.env/bin/python
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
