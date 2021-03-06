@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static i18n crispy_forms_tags %}
+{% block breadcrumb %}
+<div class="row">
+  <div class="col-xl-12">
+    <div class="page-title-box">
+      <ol class="breadcrumb float-left">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Cadastros</a></li>
+        {% if form.instance.pk %}
+        <li class="breadcrumb-item active">Editar</li>
+        {% else %}
+        <li class="breadcrumb-item active">Novo</li>
+        {% endif %}
+      </ol>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+<!-- end row -->
+
+{% block content %}
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card-box table-responsive">
+      <h4 class="m-t-0 header-title"> Cadastro de Serviço </h4>
+      <div class="tab-content p-0 bg-white">
+        <div class="tab-pane active" id="home" role="tabpanel">
+          <form class="" method="POST" action="" enctype="multipart/form-data"
+            onsubmit="saveButton.disabled = true; return true;">
+            {% csrf_token %}
+            <div class="form-group row">
+              <div class="col-8">
+                <p>Nome do Serviço</p>
+                {{ form.nome }}
+              </div>
+              <div class="col-4">
+                <p>Preço do Serviço</p>
+                {{ form.preco }}
+              </div>
+            </div>
+            <button class="primaryAction btn btn-sm btn-success waves-effect waves-light"><span class="btn-label"><i
+                  class="fa fa-check"></i></span>Salvar</button>
+            <a onclick="history.back()"
+              class="btn btn-primary btn-sm waves-effect waves-light dashboard-letter secondaryAction"><span
+                class="btn-label"><i class="fa fa-arrow-left"></i></span>Voltar</button></a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function () {
+    var SPMaskBehavior = function (val) {
+      return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+      spOptions = {
+        onKeyPress: function (val, e, field, options) {
+          field.mask(SPMaskBehavior.apply({}, arguments), options);
+        }
+      };
+
+    $('#id_telefone').mask(SPMaskBehavior, spOptions);
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("#id_data_nascimento").mask("99/99/9999");
+    $("#id_data_diagnostico").mask("99/99/9999");
+    $("#id_ano").mask("99/99/9999");
+  });
+</script>
+
+{% endblock scripts %}
