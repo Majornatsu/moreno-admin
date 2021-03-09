@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="page-title-box">
+            <ol class="breadcrumb float-left">
+                <li class="breadcrumb-item"><a href="/"> Home </a></li>
+                <li class="breadcrumb-item active"> Cadastros </li>
+            </ol>
+            <h4 class="page-title float-right">
+              <a href="{% url 'criar_bicicleta' %}" class="btn btn-primary btn-sm waves-effect waves-light dashboard-letter secondaryAction"><span class="btn-label"><i class="fa fa-plus"></i></span>Novo</button></a>
+            </h4>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- end row -->
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+           <h4 class="m-t-0 header-title"><i class="fa fa-flag"></i> Bicicleta </h4>
+              <p class="text-muted font-14 m-b-30">
+              </p>
+            <table id="datatable-buttons" class="table" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th width="220px">Marca</th>
+                    <th width="200px">Modelo</th>
+                    <th width="220px">Cliente</th>
+                    <th width="200px">Servicos</th>
+                    <th width="380px" class="text-right">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bicicleta in data %}
+                  <tr>
+                      <td>{{bicicleta.marca}}</td>
+                      <td>{{bicicleta.modelo}}</td>
+                      <td>{{bicicleta.cliente}}</td>
+                      <td>{{bicicleta.servicos}}</td>
+                      <td  class="text-right">
+                        <a href="/" class="btn btn-success btn-sm waves-effect waves-light"><i class="fa fa-paint-brush"></i> Editar</a>
+                        <a href="/" class="btn btn-primary btn-sm waves-effect waves-light"><i class="fa fa-info"></i> Detalhes</a>
+                        <a href="/" class="btn btn-danger btn-sm waves-effect waves-light"><i class="fa fa-times"></i> Excluir</a>
+                      </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    
+{% endblock content %}
+
+{% block scripts %}
+
+<!-- Required datatable js -->
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'plugins/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/vfs_fonts.js' %}"></script>
+<script src="{% static 'plugins/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/buttons.print.min.js' %}"></script>
+
+<!-- Responsive examples -->
+<script src="{% static 'plugins/datatables/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        //Buttons examples
+        var table = $('#datatable-buttons').DataTable({
+            columnDefs: [
+              {orderable: false, targets: [4]}
+            ],
+            lengthChange: false,
+            language: {
+              processing: "Carregando...",
+              search: "Pesquisar:",
+              info: "Mostrando de _START_ a _END_ de _TOTAL_ registros",
+              infoEmpty: "",
+              infoFiltered: "(filtrando de _MAX_ registros no total)",
+              infoPostFix: "",
+              loadingRecords: "Carregando...",
+              zeroRecords: "Nenhum registro encontrado",
+              emptyTable: "Nenhum registro",
+              paginate: {
+                  first: "Primeiro",
+                  previous: "Anterior",
+                  next: "Próximo",
+                  last: "Último"
+              },
+            },
+            buttons: ['excel', 'pdf']
+        });
+
+        table.buttons().container()
+                .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+    } );
+
+</script>
+{% endblock scripts %}
