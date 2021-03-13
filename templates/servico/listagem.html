@@ -41,9 +41,8 @@
                       <td>{{servico.nome}}</td>
                       <td>{{servico.preco}}</td>
                       <td  class="text-right">
-                        <a href="/" class="btn btn-success btn-sm waves-effect waves-light"><i class="fa fa-paint-brush"></i> Editar</a>
-                        <a href="/" class="btn btn-primary btn-sm waves-effect waves-light"><i class="fa fa-info"></i> Detalhes</a>
-                        <a href="/" class="btn btn-danger btn-sm waves-effect waves-light"><i class="fa fa-times"></i> Excluir</a>
+                        <a href="{% url 'editar_servico' servico.id %}" class="btn btn-success btn-sm waves-effect waves-light"><i class="fa fa-paint-brush"></i> Editar</a>
+                        <a href="{% url 'deletar_servico' servico.id %}" class="btn btn-danger btn-sm waves-effect waves-light"><i class="fa fa-times"></i> Excluir</a>
                       </td>
                   </tr>
                 {% endfor %}

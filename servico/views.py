@@ -1,9 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import pdb;
-#C->criar o cadastro 
-#R->fazer a busca e listar td q foi cadastrado
-#U->atualiza algo q foi cadastrado 
-#D->remove algo cadastrado
+
 
 from .models import Servico
 from .forms import CadastroForm
@@ -18,3 +15,18 @@ def criar_servico(request):
 def buscar_servico(request):
   data = Servico.objects.all()
   return render(request, 'servico/listagem.html', {'data':data})
+
+def editar_servico(request, pk):
+  servico = get_object_or_404(Servico, pk=pk)
+  form=CadastroForm(request.POST or None, instance=servico)
+  if form.is_valid():
+    form.save()
+    return redirect('buscar_servico')
+  return render(request, 'servico/form_cadastro.html', {'form':form})
+
+def deletar_servico(request, pk):
+  servico = get_object_or_404(Servico, pk=pk)
+  if request.method=='POST':
+    servico.delete()
+    return redirect('buscar_servico')
+  return render(request, 'deletar_confirmar.html', {'object':servico})
